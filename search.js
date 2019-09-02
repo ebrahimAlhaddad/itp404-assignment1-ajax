@@ -1,5 +1,8 @@
 $('#search_form').on('submit', function(){
 
+	$('#results').empty();
+	$('#spinner').css('display','block');
+
 	let endpoint = 'https://www.reddit.com/r/' + $('input').val() + '.json';
 	let promise = $.ajax({
 		type:'GET',
@@ -8,8 +11,7 @@ $('#search_form').on('submit', function(){
 
 	promise.then(function(response){
 
-		
-		
+
 		let response_array = response.data.children
 		let fragment = document.createDocumentFragment();
 
@@ -32,11 +34,13 @@ $('#search_form').on('submit', function(){
 			entry_div.append(author);
 			entry_div.append(seperator);
 			fragment.append(entry_div);
-			console.log(member);
+			
 
 		});
 
 		$('#results').html(fragment);
+		$('#spinner').css('display','none');
+
 
 	});
 
